@@ -7,7 +7,7 @@
                 <div class="card rounded shadow">
                     <div class="card-body">
                         <div class="col-md-6 offset-3">
-                            <img class="img-fluid" src="{{asset('img/logo-v.jpg')}}" alt="Acceder">
+                            <img class="img-fluid" src="{{asset('img/Logo-v.jpg')}}" alt="Acceder">
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
