@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/crear', 'HomeController@create');
 Route::post('/subir', 'HomeController@store');
+Route::delete('/{id}/eliminar', 'HomeController@destroy');

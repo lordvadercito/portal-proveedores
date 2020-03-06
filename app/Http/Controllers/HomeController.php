@@ -53,6 +53,14 @@ class HomeController extends Controller
             'uri' => $nombre
         ]);
 
-        return redirect('home');
+        return redirect('home')->with('success','Romaneo subido correctamente');
+    }
+
+    public function destroy($id)
+    {
+        $romaneo = Romaneo::findOrFail($id);
+        $romaneo->delete();
+
+        return redirect('home')->with('success','Romaneo borrado correctamente');
     }
 }
