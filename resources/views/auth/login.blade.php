@@ -13,13 +13,13 @@
                             @csrf
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mt-3">
                                 <input class="mdl-textfield__input" type="email" id="email" name="email"
-                                       value="{{ old('email') }}" required autofocus>
+                                       value="{{ old('email') }}" required autofocus autocomplete>
                                 <label class="mdl-textfield__label" for="email">{{ __('E-Mail Address') }}</label>
                             </div>
 
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mt-3">
                                 <input class="mdl-textfield__input" type="password" id="password" name="password"
-                                       value="{{ old('password') }}" required >
+                                       value="{{ old('password') }}" required autocomplete>
                                 <label class="mdl-textfield__label" for="password">{{ __('Password') }}</label>
                             </div>
 
