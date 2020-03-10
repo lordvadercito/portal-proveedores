@@ -41,17 +41,12 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $file = $request->file('file');
-        $file_name = $file->getClientOriginalName();
 
         //obtenemos el nombre del archivo
-        $nombre = str_replace(' ', '_', $file_name, $count);
+        $nombre = $file->getClientOriginalName();
 
         //indicamos que queremos guardar un nuevo archivo en el disco local
         \Storage::disk('local')->put($nombre, \File::get($file));
-
-        if ($count > 0) {
-            rename($file_name, $nombre);
-        }
 
         Romaneo::create([
             'nombre' => $request->input('nombre'),
