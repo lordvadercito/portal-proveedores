@@ -43,7 +43,7 @@ class HomeController extends Controller
         $file = $request->file('file');
 
         //obtenemos el nombre del archivo
-        $nombre = $file->getClientOriginalName();
+        $nombre = str_replace ( ' ', '_', $file->getClientOriginalName());
 
         //indicamos que queremos guardar un nuevo archivo en el disco local
         \Storage::disk('local')->put($nombre, \File::get($file));
