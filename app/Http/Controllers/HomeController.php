@@ -59,6 +59,7 @@ class HomeController extends Controller
     public function destroy($id)
     {
         $romaneo = Romaneo::findOrFail($id);
+        unlink($romaneo->uri);
         $romaneo->delete();
 
         return redirect('home')->with('success','Romaneo borrado correctamente');
