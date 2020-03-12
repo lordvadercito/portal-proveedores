@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Romaneo;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -41,26 +42,47 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $file = $request->file('file');
+        $input_name = str_replace(' ', '_', $request->input('nombre'));
+        $random = random_int(0, 99);
+        $now = Carbon::now()->format('d_m_Y_H_i_s');
+        $ext = $file->getClientOriginalExtension();
 
-        //obtenemos el nombre del archivo
-        $nombre = $file->getClientOriginalName();
+        //armamos el nombre del archivo
+        $nombre = "romaneo_" . $input_name . "_" . $now . "_" . $random . ".$ext";
 
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        \Storage::disk('local')->put($nombre, \File::get($file));
+        //lo almacenamos y obtenemos el path
+        $uri = $file->storeAs('romaneos', $nombre);
 
         Romaneo::create([
-            'nombre' => $request->input('nombre'),
-            'uri' => $nombre
+            'nombre' => $input_name,
+            'uri' => $uri
         ]);
 
-        return redirect('home')->with('success','Romaneo subido correctamente');
+        return redirect('home')->with('success', 'Romaneo subido correctamente');
     }
 
-    public function destroy($id)
+    public function download($id)
     {
+        $romaneo = Romaneo::findOrFail($id);
+        $uri = $romaneo->uri;
+
+        return Storage::download($uri);
+    }
+
+    public function show($id)
+    {
+        $romaneo = Romaneo::findOrFail($id);
+        $uri = $romaneo->uri;
+
+        return Storage::response($uri);
+    }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->input('id');
         $romaneo = Romaneo::findOrFail($id);
         $romaneo->delete();
 
-        return redirect('home')->with('success','Romaneo borrado correctamente');
+        return redirect('home')->with('success', 'Romaneo borrado correctamente');
     }
 }

@@ -29,6 +29,7 @@
                                     <th scope="col">Fecha de subida</th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -37,13 +38,13 @@
                                         <th scope="row">{{ $romaneo->id }}</th>
                                         <td>{{ $romaneo->nombre }}</td>
                                         <td>{{ $romaneo->created_at->format('d-m-Y') }}</td>
-                                        <td><a role="button" class="btn btn-link" href="{{ $romaneo->uri }}"
-                                               download="{{$romaneo->nombre}}_{{$romaneo->created_at->format('d-m-Y')}}.pdf">Descargar</a>
+                                        <td><a role="button" target="_blank" class="btn btn-link" href="{{ route('ver', ["id" => $romaneo->id]) }}">Ver</a></td>
+                                        <td><a role="button" target="_blank" class="btn btn-link" href="{{ route('descargar', ["id" => $romaneo->id]) }}">Descargar</a>
                                         </td>
                                         @if(auth()->user()->rol == \App\User::UPLOADER)
                                             <td>
-                                                <button type="button" class="btn btn-link" style="color: red;"
-                                                        data-toggle="modal" data-target="#deleteModal">
+                                                <button type="button" class="btn btn-link delete-romaneo" style="color: red;"
+                                                        data-id="{{ $romaneo->id }}">
                                                     Eliminar
                                                 </button>
                                             </td>
@@ -66,13 +67,11 @@
                                         </div>
                                         <div class="modal-body">
                                             <h5 class="text-center">¿Está seguro que desea eliminar este romaneo?</h5>
-                                            <p class="text-center"><b>Nombre: </b>{{ $romaneo->nombre }}</p>
-                                            <p class="text-center"><b>Subido
-                                                    el: </b>{{ $romaneo->created_at->format('d-m-Y H:i:s')}}</p>
                                         </div>
-                                        <form action="{{ url("/{$romaneo->id}/eliminar") }}" method="POST">
+                                        <form action="{{ url("/romaneo/eliminar") }}" method="POST">
                                             @method('delete')
                                             @csrf
+                                            <input type="hidden" name="id" id="romaneo_id">
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Cancelar
@@ -93,3 +92,6 @@
         </div>
     </div>
 @endsection
+@push('javascript')
+
+@endpush

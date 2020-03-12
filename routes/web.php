@@ -22,4 +22,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/crear', 'HomeController@create');
 Route::post('/subir', 'HomeController@store');
-Route::delete('/{id}/eliminar', 'HomeController@destroy');
+Route::get('/descargar/{id}', 'HomeController@download')->name('descargar');
+Route::get('/ver/{id}', 'HomeController@show')->name('ver');
+Route::delete('/romaneo/eliminar', 'HomeController@destroy');

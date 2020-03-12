@@ -85,6 +85,12 @@
     $(document).ready(function () {
         $('#message').delay('3000').slideUp(600);
     });
+
+    $(document).on('click', '.delete-romaneo', function () {
+        var id = $(this).attr('data-id');
+        $('#romaneo_id').val(id);
+        $('#deleteModal').modal('show');
+    });
 </script>
 </body>
 </html>
